@@ -29,7 +29,11 @@ class App extends Component {
     this.onDelete = this.onDelete.bind(this);
     this.onEdit = this.onEdit.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
-    this.onSort = this.onSort.bind(this);
+
+    this.onSortname = this.onSortname.bind(this);
+    this.onSortemail = this.onSortemail.bind(this);
+    this.onSortphone = this.onSortphone.bind(this);
+
     this.Adding = this.Adding.bind(this);
     this.onAddname = this.onAddname.bind(this);
     this.onAddemail = this.onAddemail.bind(this);
@@ -65,7 +69,7 @@ class App extends Component {
   onEdit(id) {
       console.log("Editing a row");
   }
-  onSort(e)
+  onSortname(e)
     {
       {/*toggle*/}
       var localdata = this.state.data;
@@ -77,6 +81,30 @@ class App extends Component {
       console.log("sorted.");
 
     }
+    onSortemail(e)
+      {
+        {/*toggle*/}
+        var localdata = this.state.data;
+        var direction = this.state.sortdirection;
+        this.setState({ sortdirection: !direction});
+        console.log(localdata);
+        localdata.sort(predicateBy("email",direction));
+        this.setState({ data: localdata});
+        console.log("sorted.");
+
+      }
+      onSortphone(e)
+        {
+          {/*toggle*/}
+          var localdata = this.state.data;
+          var direction = this.state.sortdirection;
+          this.setState({ sortdirection: !direction});
+          console.log(localdata);
+          localdata.sort(predicateBy("phone",direction));
+          this.setState({ data: localdata});
+          console.log("sorted.");
+
+        }
   Adding(e) {
     e.preventDefault();
         var newrow = {};
@@ -136,9 +164,9 @@ class App extends Component {
 
        <table className="table">
        <thead>
-       <th onClick={this.onSort}>Name (↕)</th>
-       <th>E-mail Address</th>
-       <th>Phone Number</th>
+       <th onClick={this.onSortname}>Name (↕)</th>
+       <th onClick={this.onSortemail}>E-mail Address</th>
+       <th onClick={this.onSortphone}>Phone Number</th>
        <th></th>
         </thead>
         <tbody>
