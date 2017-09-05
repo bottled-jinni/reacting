@@ -130,6 +130,10 @@ class App extends Component {
         {/*Directo manipulation.
         this.state["data"] = localdata;
         */}
+	{/* clear fields*/}
+          this.setState({ name: ""});
+          this.setState({ email: ""});
+          this.setState({ phone: ""});
         console.log("Adding a new row.", this.state.data );
 
       }
