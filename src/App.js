@@ -136,7 +136,7 @@ class App extends Component {
 
        <table className="table">
        <thead>
-       <th onClick={this.onSort}>Name</th>
+       <th onClick={this.onSort}>Name (↕)</th>
        <th>E-mail Address</th>
        <th>Phone Number</th>
        <th></th>
