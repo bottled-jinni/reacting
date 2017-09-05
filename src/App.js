@@ -23,12 +23,13 @@ class App extends Component {
       email:"",
       phone:"",
       _id: "6789087",
+      sortdirection: true,
     };
     this.state.data = require('./data.json');
     this.onDelete = this.onDelete.bind(this);
     this.onEdit = this.onEdit.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
-
+    this.onSort = this.onSort.bind(this);
     this.Adding = this.Adding.bind(this);
     this.onAddname = this.onAddname.bind(this);
     this.onAddemail = this.onAddemail.bind(this);
@@ -63,6 +64,18 @@ class App extends Component {
   }
   onEdit(id) {
       console.log("Editing a row");
+  }
+  onSort(e)
+    {
+      {/*toggle*/}
+      var localdata = this.state.data;
+      var direction = this.state.sortdirection;
+      this.setState({ sortdirection: !direction});
+      console.log(localdata);
+      localdata.sort(predicateBy("name",direction));
+      this.setState({ data: localdata});
+      console.log("sorted.");
+
     }
   Adding(e) {
     e.preventDefault();
@@ -123,8 +136,10 @@ class App extends Component {
 
        <table className="table">
        <thead>
-
-        <Head ddata = {this.state.data}/>
+       <th onClick={this.onSort}>Name</th>
+       <th>E-mail Address</th>
+       <th>Phone Number</th>
+       <th></th>
         </thead>
         <tbody>
 
@@ -149,28 +164,6 @@ class App extends Component {
   );
 }
 }//ending App
-var Head = React.createClass({
-  onSort(e) {
-    {
-      var localdata = {this.ddata};
-      console.log(localdata);
-      localdata.sort(predicateBy("name"));
-      this.setState({ data: localdata});
-      console.log("sorted.");
-
-    }
-  },
-  render() {
-    return (
-        <tr>
-          <th onClick={()=>this.onSort()}>Name</th>
-          <th>E-mail Address</th>
-          <th>Phone Number</th>
-          <th></th>
-        </tr>
-    );
-  }
-});
 var Title = React.createClass({
   render() {
     return (
@@ -178,21 +171,7 @@ var Title = React.createClass({
     );
   }
 });
-{/*
-var Addnew = React.createClass({
 
-  render() {
-    return (
-      <tr>
-        <td><input type="text" name="fullname" placeholder="Full Name" value={this.pass.state.name} onChange={this.handleChange.bind(this)}/></td>
-        <td><input type="text" name="email" placeholder="E-mail address"/></td>
-        <td><input type="text" name="phone" placeholder="Phone number" /></td>
-        <td><input type="submit" value="Add new" className="addnew"/></td>
-      </tr>
-    );
-  }
-});
-*/}
 {/*stackoverflow*/}
 function uuidv4() {
 return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -219,12 +198,22 @@ function validateName(str){
   return /^[A-Za-z\s]+$/.test(str);
 }
 {/*https://stackoverflow.com/questions/11099610/generic-way-of-sorting-json-array-by-attribute*/}
-function predicateBy(prop){
+function predicateBy(prop,direction){
+  if(direction)
    return function(a,b){
       if( a[prop] > b[prop]){
           return 1;
       }else if( a[prop] < b[prop] ){
           return -1;
+      }
+      return 0;
+   }
+   else
+   return function(a,b){
+      if( a[prop] > b[prop]){
+          return -1;
+      }else if( a[prop] < b[prop] ){
+          return 1;
       }
       return 0;
    }
