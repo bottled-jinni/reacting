@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
-//const list = require('./data.json');
+const list = require('./data.json');
 function isSearched(searchTerm) {
   return function(item) {
     return !searchTerm ||
@@ -14,7 +14,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: null,
+      data: list,
       searchTerm : '',
       name: "",
       email:"",
@@ -24,8 +24,7 @@ class App extends Component {
     };
     {/*The data does not survive refresh
       | Not saved back to the backend(file) for simplicity*/}
-    this.setState({ data: require('./data.json')});
-
+    //this.state.data = require('./data.json'); //too direct. 
     this.onDelete = this.onDelete.bind(this);
     this.onEdit = this.onEdit.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
