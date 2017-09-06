@@ -6,12 +6,12 @@ https://reacting-signup.herokuapp.com/
 From the root of the application run `npm install && npm start` and 
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## Summary (done)
-- 20 random participants
-- Table that displays the participants.
-- A form to add new row (symbolic validation)
-- Deletion of a row
-- Sorting each column 
-- Deployed online
-## summary (not done)
-- inline editing
+## Summary
+- Done: 20 random participants
+- Done: Table that displays the participants.
+- Done: A form to add new row (symbolic validation)
+- Done: Deletion of a row
+- Done: Sorting each column 
+- Done: Deployed online
+- Not Done: inline editing
+- Partially done: UI design
