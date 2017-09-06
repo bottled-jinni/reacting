@@ -1,0 +1,11 @@
+--2017-09-02 10:58:58--  https://randomuser.me/api/?inc=id,name,email,phone
+Resolving randomuser.me... 104.31.90.126, 104.31.91.126, 2400:cb00:2048:1::681f:5a7e, ...
+Connecting to randomuser.me|104.31.90.126|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 243 [application/json]
+Saving to: ‘index.html?inc=id,name,email,phone’
+
+           index.html   0%[                        ]       0  --.-KB/s               index.html?inc=id,nam 100%[=======================>]     243  --.-KB/s    in 0s      
+
+2017-09-02 10:58:58 (5.94 MB/s) - ‘index.html?inc=id,name,email,phone’ saved [243/243]
+

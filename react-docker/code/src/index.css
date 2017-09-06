@@ -1,0 +1,51 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+table, td, th {
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 15px;
+}
+tr {
+    height: 72px;
+}
+.addnew {
+    background-color: blue;
+    border: none;
+    color: white;
+    padding: 0px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    height: 40px;
+}
+.addn {
+  height: 40px;
+  width: 100%;
+  color: #505050;
+  line-height: 24px;
+  font-weight: 400;
+  font-size: 16px;
+}
+.table{
+  width: 912px;
+  margin: auto;
+
+}
+.summary {
+  text-align: center;
+  padding-left: 10px;
+}
