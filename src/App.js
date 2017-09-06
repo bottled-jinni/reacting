@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import {Table, Column, Cell} from 'fixed-data-table';
-import logo from './logo.svg';
 import './App.css';
-import Button from 'react-bootstrap/lib/Button';
 
 //const list = require('./data.json');
 function isSearched(searchTerm) {
@@ -27,7 +24,8 @@ class App extends Component {
     };
     {/*The data does not survive refresh
       | Not saved back to the backend(file) for simplicity*/}
-    this.state.data = require('./data.json');
+    this.setState({ data: require('./data.json')});
+
     this.onDelete = this.onDelete.bind(this);
     this.onEdit = this.onEdit.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
