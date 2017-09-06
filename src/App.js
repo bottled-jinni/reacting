@@ -25,6 +25,8 @@ class App extends Component {
       _id: "6789087",
       sortdirection: true,
     };
+    {/*The data does not survive refresh
+      | Not saved back to the backend(file) for simplicity*/}
     this.state.data = require('./data.json');
     this.onDelete = this.onDelete.bind(this);
     this.onEdit = this.onEdit.bind(this);
@@ -67,10 +69,21 @@ class App extends Component {
     this.setState({ phone: e.target.value });
   }
   onEdit(id) {
-      console.log("Editing a row");
+    {/*No implemnetaion*/}
+      console.log("Not implemented");
   }
+  //==============================START of SORTING==============================
+  //  All sorting methods require
+  //    Column name AND sort direction which changes(true/false) on every click.
+  //  Notes:
+  //    - It is possible to combine all of them into one,
+  //    - It is possible to keep sorted arrays of columns
+  //        - the arrays are Updated on deletion and addition.
+  //        - Assuming more (>>>>>>>) users sort than [add or remove]
+  //            - Using the arrays seems to be less expensive.
+  //
   onSortname(e)
-    {
+  {
       {/*toggle*/}
       var localdata = this.state.data;
       var direction = this.state.sortdirection;
@@ -80,43 +93,43 @@ class App extends Component {
       this.setState({ data: localdata});
       console.log("sorted.");
 
-    }
-    onSortemail(e)
-      {
+  }
+  onSortemail(e)
+  {
+      {/*toggle*/}
+      var localdata = this.state.data;
+      var direction = this.state.sortdirection;
+      this.setState({ sortdirection: !direction});
+      console.log(localdata);
+      localdata.sort(predicateBy("email",direction));
+      this.setState({ data: localdata});
+      console.log("sorted.");
+
+  }
+  onSortphone(e)
+  {
         {/*toggle*/}
         var localdata = this.state.data;
         var direction = this.state.sortdirection;
         this.setState({ sortdirection: !direction});
         console.log(localdata);
-        localdata.sort(predicateBy("email",direction));
+        localdata.sort(predicateBy("phone",direction));
         this.setState({ data: localdata});
         console.log("sorted.");
 
-      }
-      onSortphone(e)
-        {
-          {/*toggle*/}
-          var localdata = this.state.data;
-          var direction = this.state.sortdirection;
-          this.setState({ sortdirection: !direction});
-          console.log(localdata);
-          localdata.sort(predicateBy("phone",direction));
-          this.setState({ data: localdata});
-          console.log("sorted.");
-
-        }
+  }
+  //{/*
+  //  ==============================END of SORTING==============================
+  //  */}
   Adding(e) {
     e.preventDefault();
         var newrow = {};
-        {/*
-          generate an id (uuid) = done
-          validation ? protoTypes ?
-
-        */}
+        {/* Do validation */}
         var isEmail = ValidateEmail(this.state.email);
         var isPhone = telephoneCheck(this.state.phone);
         var isName  = validateName(this.state.name);
 
+      {/* if all fields are valid with the exception of id, proceed*/}
       if(isEmail && isPhone && isName)
       {
         newrow["_id"]  = uuidv4();
@@ -127,21 +140,22 @@ class App extends Component {
         console.log(this.state.data[0]._id);
         localdata.push(newrow);
         this.setState({ data: localdata});
-        {/*Directo manipulation.
-        this.state["data"] = localdata;
-        */}
-	{/* clear fields*/}
-          this.setState({ name: ""});
-          this.setState({ email: ""});
-          this.setState({ phone: ""});
-        console.log("Adding a new row.", this.state.data );
-
+	      {/* clear fields for next input*/}
+        this.setState({ name: ""});
+        this.setState({ email: ""});
+        this.setState({ phone: ""});
+        console.log("Done: Adding a new row.");
       }
+
       else{
+        {/* if at least one field is invalid, alert user
+            - Very simplicitc.
+            - Requiers specific feedback. [as in 'email requires @'.....]
+          */}
         {/*show whichever is wrong*/}
         var message = "";
-        message += isEmail ? "" : "\nInvalid email, provide a correct one.";
-        message += isPhone ? "" : "\nInvalid Phone, provide a correct one.(10 digits required)";
+        message += isEmail ? "" : "\nInvalid email, provide a correct one., abc@def.com";
+        message += isPhone ? "" : "\nInvalid Phone, provide a correct one.(10 digits required=1234567891)";
         message += isName ?  "" : "\nInvalid Name, provide a correct one.";
         {/*
             Hot to avoid alert  ?
@@ -169,15 +183,14 @@ class App extends Component {
        <table className="table">
        <thead>
        <th onClick={this.onSortname}>Name (↕)</th>
-       <th onClick={this.onSortemail}>E-mail Address</th>
-       <th onClick={this.onSortphone}>Phone Number</th>
+       <th onClick={this.onSortemail}>E-mail Address (↕)</th>
+       <th onClick={this.onSortphone}>Phone Number (↕)</th>
        <th></th>
         </thead>
         <tbody>
 
 
       { this.state.data.filter(isSearched(this.state.searchTerm)).map(item =>{
-      //{ this.state.data.map(item=> {
         return (
           <tr key={item._id} className="addn" >
             <td>{item.name}</td>
@@ -229,12 +242,17 @@ function telephoneCheck(str) {
 function validateName(str){
   return /^[A-Za-z\s]+$/.test(str);
 }
-{/*https://stackoverflow.com/questions/11099610/generic-way-of-sorting-json-array-by-attribute*/}
+{/*
+  https://stackoverflow.com/questions/11099610/generic-way-of-sorting-json-array-by-attribute
+    direction: is passed as true/false to determin sorting direction.
+               value determned by the caller.
+
+  */}
 function predicateBy(prop,direction){
   if(direction)
    return function(a,b){
       if( a[prop] > b[prop]){
-          return 1;
+          return 1;{/*forward direction*/}
       }else if( a[prop] < b[prop] ){
           return -1;
       }
@@ -243,7 +261,7 @@ function predicateBy(prop,direction){
    else
    return function(a,b){
       if( a[prop] > b[prop]){
-          return -1;
+          return -1; {/*reverse direction*/}
       }else if( a[prop] < b[prop] ){
           return 1;
       }
